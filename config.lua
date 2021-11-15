@@ -4,13 +4,13 @@ QB.Spawns = {
     ["legion"] = {
         coords = vector4(195.17, -933.77, 29.7, 144.5),
         location = "legion",
-        label = "Legion Square",
+        label = "Blokkenpark",
     },
 
     ["policedp"] = {
         coords = vector4(428.23, -984.28, 29.76, 3.5),
         location = "policedp",
-        label = "Police Department",
+        label = "Politie Hoofdbureau",
     },
 
     ["paleto"] = {
@@ -22,6 +22,18 @@ QB.Spawns = {
     ["motel"] = {
         coords = vector4(327.56, -205.08, 53.08, 163.5),
         location = "motel",
-        label = "Motels",
+        label = "Motel",
     },
+}
+
+QB.JobSpawns = {
+    ["police"] = {
+        coords = vector4(428.23, -984.28, 29.76, 3.5),
+        location = 'policedp',
+        label = 'Politie Hoofdbureau',
+        job = 'police',
+    },
+    -- ["ambulance"] = {
+
+    -- },
 }
