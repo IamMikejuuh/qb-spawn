@@ -7,11 +7,11 @@ QB.Spawns = {
         label = "Blokkenpark",
     },
 
-    ["policedp"] = {
-        coords = vector4(428.23, -984.28, 29.76, 3.5),
-        location = "policedp",
-        label = "Politie Hoofdbureau",
-    },
+    -- ["policedp"] = {
+    --     coords = vector4(428.23, -984.28, 29.76, 3.5),
+    --     location = "policedp",
+    --     label = "Politie Hoofdbureau",
+    -- },
 
     ["paleto"] = {
         coords = vector4(80.35, 6424.12, 31.67, 45.5),
@@ -29,9 +29,13 @@ QB.Spawns = {
 QB.JobSpawns = {
     ["police"] = {
         coords = vector4(428.23, -984.28, 29.76, 3.5),
-        location = 'policedp',
+        location = 'police',
         label = 'Politie Hoofdbureau',
-        job = 'police',
+    },
+    ["ambulance"] = {
+        coords = vector4(294.56, -600.94, 43.3, 79.99),
+        location = 'ambulance',
+        label = 'Ziekenhuis',
     },
     -- ["ambulance"] = {
 

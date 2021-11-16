@@ -14,7 +14,7 @@ $(document).ready(function() {
         }
 
         if (data.action == "setupLocations") {
-            setupLocations(data.locations, data.houses)
+            setupLocations(data.locations, data.houses, data.myJob)
         }
 
         if (data.action == "setupAppartements") {
@@ -67,7 +67,7 @@ $(document).on('click', '#submit-spawn', function(evt){
     }
 });
 
-function setupLocations(locations, myHouses) {
+function setupLocations(locations, myHouses, myJob) {
     var parent = $('.spawn-locations')
     $(parent).html("");
 
@@ -85,7 +85,13 @@ function setupLocations(locations, myHouses) {
                 $(parent).append('<div class="location" id="location" data-location="'+house.house+'" data-type="house" data-label="'+house.label+'"><p><span id="'+house.house+'">'+house.label+'</span></p></div>')
             });
         }
-
+        if (myJob != undefined) {
+            $.each(myJob, function(index, location){
+                $(parent).append('<div class="location" id="location" data-location="'+location.location+'" data-type="job" data-label="'+location.label+'"><p><span id="'+location.location+'">'+location.label+'</span></p></div>')
+            });
+            // console.table(myJob);
+        }
+        // console.table(myJob);
         $(parent).append('<div class="submit-spawn" id="submit-spawn"><p><span id="spawn-label"></span></p></div>');
         $('.submit-spawn').hide();
     }, 100)

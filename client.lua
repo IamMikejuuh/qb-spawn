@@ -7,6 +7,7 @@ local cam1Time = 500
 local cam2Time = 1000
 local choosingSpawn = false
 local cam, cam2 = nil, nil
+local PlayerJob = {}
 
 -- Functions
 
@@ -39,6 +40,20 @@ RegisterNetEvent('qb-houses:client:setHouseConfig', function(houseConfig)
     Config.Houses = houseConfig
 end)
 
+function tablePrintOut(table)
+    if type(table) == 'table' then
+       local s = '\n{ '
+       for k,v in pairs(table) do
+          if type(k) ~= 'number' then k = '"'..k..'"' end
+          s = s .. '['..k..'] = ' .. tablePrintOut(v) .. ',\n'
+       end
+       return s .. '}'
+    else
+       return tostring(table)
+    end
+ end
+
+
 RegisterNetEvent('qb-spawn:client:setupSpawns', function(cData, new, apps)
     if not new then
         QBCore.Functions.TriggerCallback('qb-spawn:server:getOwnedHouses', function(houses)
@@ -51,12 +66,21 @@ RegisterNetEvent('qb-spawn:client:setupSpawns', function(cData, new, apps)
                     }
                 end
             end
+            local playerJob = QBCore.Functions.GetPlayerData().job.name
+            local myJob = {}
+            if playerJob == "police" then 
+                myJob[playerJob] = QB.JobSpawns[playerJob]
+                -- print(tablePrintOut(myJob))
+            elseif playerJob == "ambulance" then
+                myJob[playerJob] = QB.JobSpawns[playerJob]
+            end
 
             Wait(500)
             SendNUIMessage({
                 action = "setupLocations",
                 locations = QB.Spawns,
                 houses = myHouses,
+                myJob = myJob,
             })
         end, cData.citizenid)
     elseif new then
@@ -196,6 +220,18 @@ RegisterNUICallback('spawnplayer', function(data)
         PostSpawnPlayer()
     elseif type == "normal" then
         local pos = QB.Spawns[location].coords
+        PreSpawnPlayer()
+        SetEntityCoords(ped, pos.x, pos.y, pos.z)
+        TriggerServerEvent('QBCore:Server:OnPlayerLoaded')
+        TriggerEvent('QBCore:Client:OnPlayerLoaded')
+        TriggerServerEvent('qb-houses:server:SetInsideMeta', 0, false)
+        TriggerServerEvent('qb-apartments:server:SetInsideMeta', 0, 0, false)
+        Wait(500)
+        SetEntityCoords(ped, pos.x, pos.y, pos.z)
+        SetEntityHeading(ped, pos.w)
+        PostSpawnPlayer()
+    elseif type == "job" then
+        local pos = QB.JobSpawns[location].coords
         PreSpawnPlayer()
         SetEntityCoords(ped, pos.x, pos.y, pos.z)
         TriggerServerEvent('QBCore:Server:OnPlayerLoaded')
